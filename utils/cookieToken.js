@@ -1,6 +1,6 @@
 import getJwtToken from "../helpers/getJwtToken.js";
 
-export default function cookieToken(user, res){
+export default function cookieToken(user, res) {
     const token = getJwtToken(user.id);
     const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -11,5 +11,5 @@ export default function cookieToken(user, res){
     res
         .status(200)
         .cookie('token', token, options)
-        .json({success: true, token, user})
+        .json({ success: true, token, user })
 }
