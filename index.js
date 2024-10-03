@@ -1,7 +1,8 @@
 import express from 'express';
 import 'dotenv/config'
 import cookieParser from 'cookie-parser';
-import router from './routes/user.routes.js' 
+import {router as userRouter} from './routes/user.routes.js';
+import {router as postRouter} from './routes/post.routes.js'
 
 const app = express();
 
@@ -22,7 +23,8 @@ app.get('/', (_, res) => {
     res.send("Hello World");
 })
 
-app.use('/api', router);
+app.use('/api', userRouter);
+app.use('/api/posts', postRouter);
 
 app.listen(3000, () => {
     console.log("The server is listening on port 3000");

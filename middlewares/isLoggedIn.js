@@ -18,7 +18,7 @@ const isLoggedIn = async (req, res, next) => {
             return res.status(400).json({ success: false, message: "Invalid token" });
         }
 
-        res.user = user;
+        req.user = user;
 
         next();
 

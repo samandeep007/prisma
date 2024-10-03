@@ -62,7 +62,7 @@ const getAllPosts = async (req, res) => {
 
         return res.status(200).json({ success: false, message: "Posts retrieved successfully!", data: posts });
     } catch (error) {
-        console.error("post.controller ", error);
+        console.error("post.controller :: getAllPosts :: Something went wrong ::", error);
         return res.status(200).json({ success: false, message: "Something went wrong while retrieving the posts" })
     }
 }
@@ -107,4 +107,4 @@ const deletePost = async (req, res) => {
     }
 }
 
-export { createPost, getPost, updatePost, deletePost }
+export { createPost, getPost, updatePost, deletePost, getAllPosts }
