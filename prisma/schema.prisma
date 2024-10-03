@@ -32,3 +32,5 @@ model Post {
   author   User   @relation(fields: [authorId], references: [id])
   authorId String @db.ObjectId
 }
+
+//Whenever you touch your schema file, you need to run the npx prisma generate command
