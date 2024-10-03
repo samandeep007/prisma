@@ -6,30 +6,29 @@ const register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        //Check
+        // Check if all fields are provided
         if ([name, email, password].some(field => !field || field === "")) {
-            throw new Error("Please provide all the fields");
+            return res.status(400).json({ success: false, message: "Please provide all the fields" });
         }
 
+        // Create the user in the database
         const user = await prisma.user.create({
             data: {
                 name: name,
                 email: email,
-                password: await bcrypt.hash(password, 10)
+                password: await bcrypt.hash(password, 10)  // Hash password
             }
-        })
+        });
 
-        //Send user a token
-        cookieToken(user);
+        // Send user a token and set it in a cookie
+        cookieToken(user, res);
 
-        return res.json({user})
-
+        // No need for additional res.json() here, cookieToken sends the response
 
     } catch (error) {
         console.error("controllers :: user.controller.js :: register :: Something went wrong: ", error);
-        // return res.status(500).json({success: false, message: "Something went wrong"})
-        throw new Error(error);
+        return res.status(500).json({ success: false, message: "Something went wrong" });
     }
-}
+};
 
 export { register };
