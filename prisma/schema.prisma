@@ -34,3 +34,4 @@ model Post {
 }
 
 //Whenever you touch your schema file, you need to run the npx prisma generate command
+

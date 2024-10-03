@@ -4,10 +4,10 @@ import cookieToken from '../utils/cookieToken.js';
 
 const register = async (req, res) => {
     try {
-        const {name, email, password}  = req.body;
+        const { name, email, password } = req.body;
 
         //Check
-        if([name, email, password].some(field => !field || field === "")){
+        if ([name, email, password].some(field => !field || field === "")) {
             throw new Error("Please provide all the fields");
         }
 
@@ -22,9 +22,9 @@ const register = async (req, res) => {
         //Send user a token
         cookieToken(user);
 
-        return res.status
+        return res.json({user})
 
-        
+
     } catch (error) {
         console.error("controllers :: user.controller.js :: register :: Something went wrong: ", error);
         // return res.status(500).json({success: false, message: "Something went wrong"})

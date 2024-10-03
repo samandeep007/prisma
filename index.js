@@ -1,6 +1,7 @@
 import express from 'express';
 import 'dotenv/config'
 import cookieParser from 'cookie-parser';
+import router from './routes/user.routes.js' 
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(cookieParser());
 app.get('/', (_, res) => {
     res.send("Hello World");
 })
+
+app.use('/api', router);
 
 app.listen(3000, () => {
     console.log("The server is listening on port 3000");
