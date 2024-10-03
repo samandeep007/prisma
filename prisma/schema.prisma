@@ -13,3 +13,5 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//Read documentation for more informations regarding this datasource and generator
+
