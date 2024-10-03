@@ -31,4 +31,46 @@ const register = async (req, res) => {
     }
 };
 
-export { register };
+const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(200).json({ success: false, message: "Please provide all the details" });
+        }
+
+        const user = await prisma.user.findUnique({
+            where: {email: email}
+        })
+
+        //When there is no user
+        if(!user) {
+            return res.status(400).json({success: false, message: "User with these credentials doesn't exist"});
+        }
+
+        //Password mismatch
+        const isValidPassword = await bcrypt.compare(password, user.password);
+        
+        if(!isValidPassword){
+            return res.status(400).json({success: false, message: "Wrong password, Please try again!"});
+        }
+
+        //user is there and validated
+        cookieToken(user, res);
+
+        
+    } catch (error) {
+        console.error("controllers :: user.controller.js :: login :: Something went wrong :: ", error);
+        return res.status(500).json({ success: false, message: "Something went wrong" })
+    }
+}
+
+const logout = async(req, res) => {
+    try {
+       res.clearCookie('token');
+    } catch (error) {
+        
+    }
+}
+
+
+export { register, login };
